@@ -120,6 +120,17 @@ function slotMissing(img) {
 <h1>Is HomeView the next Apple Watch?</h1>
 <p class="lede">Four attached bets (Apple Watch, AirPods, Tesla Powerwall, Meta glasses) compared on one question: how tightly each is anchored to its parent, and what that predicts for HomeView.</p>
 
+<div class="card" style="margin-bottom:16px">
+  <h3>The comparison at a glance: who is each bet's customer tied to?</h3>
+  <div id="spectrum-top"></div>
+  <div class="legend">
+    <span><i style="background:#374151"></i>Today</span>
+    <span><i style="background:#fff;border:2px dashed #374151"></i>Projected (HomeView)</span>
+    <span><i style="background:#9ca3af"></i>Earlier position</span>
+  </div>
+  <p class="note" style="margin-bottom:0">Positions are analyst judgment based on the case study's dependency evidence. HomeView is not in the source data; its marker uses the premise that its personalised experience depends on paired Apple devices. Detail in section 3.</p>
+</div>
+
 <div class="card post">
   <p class="big">Is HomeView the next Apple Watch?</p>
   <p>On anchoring, it looks like a repeat.</p>
@@ -463,12 +474,12 @@ function spectrum(id, rows) {
   const sx = v => L + (W - L - R) * v;
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
   svg.appendChild(el("defs", {})).innerHTML =
-    '<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6e6e73"/></marker>';
+    `<marker id="arr-${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6e6e73"/></marker>`;
   svg.appendChild(el("text", { x: sx(0), y: 16, "text-anchor": "start", class: "axis-label" }, "Locked to the parent's customers"));
   svg.appendChild(el("text", { x: sx(1), y: 16, "text-anchor": "end", class: "axis-label" }, "Open to anyone"));
-  svg.appendChild(el("rect", { x: sx(0), y: 24, width: sx(1) - sx(0), height: 6, rx: 3, fill: "url(#grad)" }));
+  svg.appendChild(el("rect", { x: sx(0), y: 24, width: sx(1) - sx(0), height: 6, rx: 3, fill: `url(#grad-${id})` }));
   svg.querySelector("defs").innerHTML +=
-    '<linearGradient id="grad" x1="0" x2="1"><stop offset="0" stop-color="#374151"/><stop offset="1" stop-color="#e5e7eb"/></linearGradient>';
+    `<linearGradient id="grad-${id}" x1="0" x2="1"><stop offset="0" stop-color="#374151"/><stop offset="1" stop-color="#e5e7eb"/></linearGradient>`;
   rows.forEach((r, i) => {
     const y = T + i * rowH + rowH / 2;
     svg.appendChild(el("line", { x1: sx(0), x2: sx(1), y1: y, y2: y, class: "grid-line" }));
@@ -483,7 +494,7 @@ function spectrum(id, rows) {
       probe.src = IMG[r.img].src;
     }
     if (r.from !== undefined) {
-      svg.appendChild(el("line", { x1: sx(r.from) + 9, x2: sx(r.to) - 12, y1: y, y2: y, stroke: "#6e6e73", "stroke-width": 2, "marker-end": "url(#arr)" }));
+      svg.appendChild(el("line", { x1: sx(r.from) + 9, x2: sx(r.to) - 12, y1: y, y2: y, stroke: "#6e6e73", "stroke-width": 2, "marker-end": `url(#arr-${id})` }));
       svg.appendChild(el("circle", { cx: sx(r.from), cy: y, r: 8, fill: "#9ca3af" }));
       if (r.fromLabel) svg.appendChild(el("text", { x: sx(r.from), y: y - 14, "text-anchor": "middle" }, r.fromLabel));
     }
@@ -622,14 +633,16 @@ document.getElementById("credits").innerHTML = "<strong>Image credits:</strong> 
   .map(k => `<a href="${IMG[k].url}">${IMG[k].cap.split(" (")[0]}</a> by ${IMG[k].by} (${IMG[k].lic})`).join("; ") +
   ". All via Wikimedia Commons. CC BY-SA images are shared under the same licence. Meta glasses and HomeView images are supplied by the author.";
 
-/* Anchoring spectrum: positions are analyst judgment */
-spectrum("spectrum", [
+/* Anchoring spectrum: positions are analyst judgment. Drawn twice: hero card at the top and section 3. */
+const SPECTRUM_ROWS = [
   { name: "Apple Watch", img: "watch2015", to: 0.05, color: C.watch, toLabel: "iPhone" },
   { name: "AirPods", img: "pods1", to: 0.08, color: C.pods, toLabel: "iPhone" },
   { name: "HomeView", img: "homeview", to: 0.08, color: C.home, projected: true, toLabel: "Paired Apple devices" },
   { name: "Meta glasses", img: "glasses", from: 0.14, to: 0.58, color: C.meta, fromLabel: "2021: metaverse, Facebook", toLabel: "Today: retail buyers, Meta AI" },
   { name: "Tesla Powerwall", img: "pw2", from: 0.72, to: 0.95, color: C.tesla, fromLabel: "No Tesla car needed", toLabel: "Megapack: utilities" },
-]);
+];
+spectrum("spectrum-top", SPECTRUM_ROWS);
+spectrum("spectrum", SPECTRUM_ROWS);
 </script>
 </body>
 </html>

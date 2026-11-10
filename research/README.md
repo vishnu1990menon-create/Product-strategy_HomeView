@@ -10,6 +10,7 @@ Everything referenced while building [HomeView attached bets.html](../HomeView%2
 | [images/](./images) | Local copies of the product images used on the page (web-sized, up to 960 px wide) |
 | [webpages/](./webpages) | Saved Wikimedia Commons description pages for each image (HTML, as fetched on 10 Nov 2026) |
 | [licence-metadata/](./licence-metadata) | Commons API output per image: author, licence, original file URL and size |
+| [cited-sources/](./cited-sources) | PDF and HTML copies of the sources the case study cites, with a verification table |
 
 ## 1. Source documents
 
@@ -22,12 +23,7 @@ The same case study also exists as a PDF in the parent folder (`Attached Bets Ap
 
 ### Sources cited inside the case study
 
-These are listed in the source documents (sections 7/8) and were **not fetched or re-verified** here. Check them before publication.
-
-- Apple 10-K FY2022 and FY2025; Six Colors FY2025 analysis
-- Tesla Q3 2026 update and Q1 2026 10-Q; Electrek and Energy-Storage.News coverage; Electrek Powerwall milestone reporting; Powerwall version tables (Wikipedia and mirrors)
-- Meta figures: TechRepublic, UploadVR, TechSpot, Meta's help center, AI Wiki and an aggregator for unit counts (search-result excerpts, not full-page reads); IDC projections via an aggregator
-- Launch-week press coverage for Series 12, Ultra 4 and AirPods 5
+Archived copies, a line-by-line verification of the headline figures and the list of sources that could not be obtained are in [cited-sources/README.md](./cited-sources/README.md). Summary: Apple and Tesla filings, Energy-Storage.News, Electrek, IDC, UploadVR, Six Colors, Meta's help center and launch coverage are saved as PDFs; Tesla's Q3 deck, Apple's own announcement, TechRepublic, TechSpot, "AI Wiki" and the Meta unit-count aggregator were not obtained.
 
 ## 2. Images used on the page
 
