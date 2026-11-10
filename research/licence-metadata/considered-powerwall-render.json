@@ -1,0 +1,105 @@
+{
+    "batchcomplete": true,
+    "query": {
+        "normalized": [
+            {
+                "fromencoded": false,
+                "from": "File:Tesla_Powerwall_Render.svg",
+                "to": "File:Tesla Powerwall Render.svg"
+            }
+        ],
+        "pages": [
+            {
+                "pageid": 63857437,
+                "ns": 6,
+                "title": "File:Tesla Powerwall Render.svg",
+                "imagerepository": "local",
+                "imageinfo": [
+                    {
+                        "size": 7168,
+                        "width": 372,
+                        "height": 524,
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/3/38/Tesla_Powerwall_Render.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+                        "descriptionurl": "https://commons.wikimedia.org/wiki/File:Tesla_Powerwall_Render.svg",
+                        "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=63857437",
+                        "extmetadata": {
+                            "DateTime": {
+                                "value": "2017-11-04 19:15:55",
+                                "source": "mediawiki-metadata",
+                                "hidden": ""
+                            },
+                            "ObjectName": {
+                                "value": "Tesla Powerwall Render",
+                                "source": "mediawiki-metadata"
+                            },
+                            "CommonsMetadataExtension": {
+                                "value": 1.2,
+                                "source": "extension",
+                                "hidden": ""
+                            },
+                            "Categories": {
+                                "value": "Tesla Powerwall|Self-published work|Tesla graphic design logos",
+                                "source": "commons-categories",
+                                "hidden": ""
+                            },
+                            "Assessments": {
+                                "value": "",
+                                "source": "commons-categories",
+                                "hidden": ""
+                            },
+                            "ImageDescription": {
+                                "value": "Tesla Powerwalla rendering.",
+                                "source": "commons-desc-page"
+                            },
+                            "DateTimeOriginal": {
+                                "value": "2017-11-04",
+                                "source": "commons-desc-page"
+                            },
+                            "Credit": {
+                                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                                "source": "commons-desc-page"
+                            },
+                            "Artist": {
+                                "value": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Jzh2074&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Jzh2074 (page does not exist)\">Jzh2074</a>",
+                                "source": "commons-desc-page"
+                            },
+                            "LicenseShortName": {
+                                "value": "CC BY-SA 4.0",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "UsageTerms": {
+                                "value": "Creative Commons Attribution-Share Alike 4.0",
+                                "source": "commons-desc-page"
+                            },
+                            "AttributionRequired": {
+                                "value": "true",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "LicenseUrl": {
+                                "value": "https://creativecommons.org/licenses/by-sa/4.0",
+                                "source": "commons-desc-page"
+                            },
+                            "Copyrighted": {
+                                "value": "True",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "Restrictions": {
+                                "value": "",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "License": {
+                                "value": "cc-by-sa-4.0",
+                                "source": "commons-templates",
+                                "hidden": ""
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

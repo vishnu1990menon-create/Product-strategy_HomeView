@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is HomeView the next Apple Watch? Anchoring in attached bets</title>
+<style>
+  :root {
+    --ink: #1d1d1f; --muted: #6e6e73; --line: #e5e5ea; --bg: #f5f5f7; --card: #fff;
+    --watch: #2563eb; --pods: #0d9488; --tesla: #dc2626; --meta: #7c3aed; --home: #374151; --amber: #d97706;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  main { max-width: 1020px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { font-size: 2.1rem; line-height: 1.2; margin: 0 0 8px; }
+  h2 { font-size: 1.35rem; margin: 48px 0 6px; }
+  h3 { font-size: 1rem; margin: 0 0 4px; }
+  p.lede { font-size: 1.1rem; color: var(--muted); margin: 0 0 24px; }
+  .note { color: var(--muted); font-size: .85rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+  .grid { display: grid; gap: 16px; }
+  .g1 { grid-template-columns: 1fr; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .g4 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .post p { margin: 0 0 10px; }
+  .post .big { font-size: 1.15rem; font-weight: 700; }
+  .tag { display: inline-block; font-size: .72rem; font-weight: 600; padding: 2px 8px; border-radius: 99px;
+    color: #fff; vertical-align: middle; margin-left: 6px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .8rem; color: var(--muted); margin-top: 8px; }
+  .legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  svg { width: 100%; height: auto; display: block; }
+  svg text { font-family: inherit; fill: var(--muted); font-size: 11px; }
+  svg .val { fill: var(--ink); font-weight: 600; }
+  svg .grid-line { stroke: var(--line); stroke-width: 1; }
+  svg .axis-label { fill: var(--ink); font-size: 12px; font-weight: 600; }
+  .verdict { border-top: 4px solid var(--c); }
+  .verdict .v { font-weight: 700; color: var(--c); }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: .8rem; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .split { grid-template-columns: 1fr; } h1 { font-size: 1.6rem; } }
+  .person { border-left: 4px solid var(--c); padding-left: 14px; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: .8rem; margin: 2px 4px 2px 0;
+    background: #eef2ff; color: #3730a3; }
+  .pill.dim { background: #f3f4f6; color: #6b7280; }
+  footer { margin-top: 48px; font-size: .8rem; color: var(--muted); }
+
+  /* generation rail */
+  .rail-wrap { overflow-x: auto; padding-bottom: 8px; }
+  .rail { display: flex; gap: 12px; position: relative; padding-top: 22px; min-width: min-content; }
+  .rail::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 3px; background: var(--rc); opacity: .35; border-radius: 2px; }
+  .gen { flex: 0 0 168px; position: relative; background: #fafafa; border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+  .gen::before { content: ""; position: absolute; top: -21px; left: 14px; width: 13px; height: 13px; border-radius: 50%;
+    background: var(--rc); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--rc); }
+  .gen .yr { font-weight: 700; font-size: .95rem; }
+  .gen .nm { color: var(--muted); font-size: .78rem; margin-bottom: 6px; line-height: 1.3; }
+  .chip { display: block; font-size: .72rem; line-height: 1.3; color: #fff; border-radius: 6px; padding: 3px 7px; margin-top: 4px; }
+  .chip.none { background: #d1d5db; color: #374151; }
+  .keys { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; font-size: .78rem; }
+  .keys span { color: #fff; border-radius: 99px; padding: 2px 10px; }
+  .block { margin-top: 28px; }
+  .read { font-size: .92rem; }
+  .read li { margin-bottom: 6px; }
+
+  /* images */
+  .figrow { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 0 6px; }
+  .fig { margin: 0; flex: 1 1 220px; max-width: 360px; }
+  .fig img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: #f3f4f6; display: block; }
+  .figrow.small .fig { flex: 0 0 auto; width: 170px; }
+  .figrow.small .fig img, .figrow.small .ph { height: 105px; }
+  .fig figcaption { font-size: .75rem; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+  .fig .credit { display: block; font-size: .68rem; opacity: .85; }
+  .ph { height: 200px; border: 2px dashed #cbd5e1; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: .78rem; color: #94a3b8; padding: 8px; background: #f8fafc; }
+  .thumb { height: 44px; width: 64px; object-fit: cover; border-radius: 6px; display: block; margin: 0 auto 4px; border: 1px solid var(--line); }
+  div.thumb { border: 2px dashed #cbd5e1; background: #f8fafc; }
+  #credits { margin-top: 8px; }
+  #credits a { color: inherit; }
+
+  /* anchoring */
+  .hb { display: inline-block; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #374151; vertical-align: middle; }
+  .hb.full { background: #374151; }
+  .hb.half { background: linear-gradient(90deg, #374151 50%, transparent 50%); }
+  .hb.na { border-style: dashed; border-color: #9ca3af; }
+  table.matrix td, table.matrix th { text-align: center; }
+  table.matrix td:first-child, table.matrix th:first-child { text-align: left; }
+  .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin: 10px 0; }
+  .flow .st { flex: 1 1 200px; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 10px; padding: 10px 12px; font-size: .88rem; }
+  .flow .ar { align-self: center; font-size: 1.4rem; color: var(--meta); }
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .cols2 { grid-template-columns: 1fr; } }
+  .cols2 > div { border-radius: 12px; padding: 14px 16px; font-size: .92rem; }
+  .cols2 .lock { background: #eff6ff; border: 1px solid #bfdbfe; }
+  .cols2 .open { background: #fef2f2; border: 1px solid #fecaca; }
+  .cols2 h3 { margin-bottom: 6px; }
+  .cols2 ul { margin: 6px 0 0; padding-left: 18px; }
+</style>
+<script>
+/* Swap a missing image for a dashed placeholder naming the file to supply */
+function slotMissing(img) {
+  const d = document.createElement("div");
+  d.className = img.classList.contains("thumb") ? "thumb" : "ph";
+  if (d.className === "ph") d.textContent = "Image to supply: " + img.getAttribute("src");
+  img.replaceWith(d);
+}
+</script>
+</head>
+<body>
+<main>
+
+<h1>Is HomeView the next Apple Watch?</h1>
+<p class="lede">Four attached bets (Apple Watch, AirPods, Tesla Powerwall, Meta glasses) compared on one question: how tightly each is anchored to its parent, and what that predicts for HomeView.</p>
+
+<div class="card post">
+  <p class="big">Is HomeView the next Apple Watch?</p>
+  <p>On anchoring, it looks like a repeat.</p>
+  <p>Attached bets get a head start from the parent: customers, trust and time. The price is dependence on the parent's ecosystem.</p>
+  <p>Apple Watch and AirPods took that deal. Both need the iPhone for the full experience, and both are bought by iPhone owners. The Watch used the time to find its job in health.</p>
+  <p>Two other bets moved away from their parent's customer base.</p>
+  <p>Tesla's Powerwall never required a Tesla car. Its scale came through Megapack, sold to utilities.</p>
+  <p>Meta's glasses began in 2021 as an add-on to the VR and metaverse bet. Buyers now arrive through Ray-Ban and Oakley retail, and the pitch is an AI assistant, not the metaverse.</p>
+  <p>HomeView looks like the first group. Its household pitch is broad, but its personalised experience depends on paired Apple devices.</p>
+  <p><strong>A watch serves a person. A home display serves a household.</strong></p>
+  <p>In a mixed Apple–Android home, the buyer's ecosystem may not be everyone's. The anchor that gave the Watch time becomes a barrier at household scale.</p>
+  <p>Powerwall and Meta show the way out: stop requiring the parent's customers.</p>
+  <p>The test: can HomeView serve the whole household, not just the Apple users in it?</p>
+</div>
+
+<!-- 1. POSITIONING -->
+<h2>1. Positioning: launch job vs. what it became</h2>
+<p class="note">Bars show the dominant pitch in each period. Lower lanes are overlays that run alongside the main arc.</p>
+<div class="grid g1">
+  <div class="card"><h3>Apple Watch <span class="tag" style="background:var(--watch)">Hard anchor: iPhone</span></h3><div class="figrow small" data-figs="watch2015"></div><div id="tl-watch"></div></div>
+  <div class="card"><h3>AirPods <span class="tag" style="background:var(--pods)">Hard anchor: iPhone</span></h3><div class="figrow small" data-figs="pods1"></div><div id="tl-pods"></div></div>
+  <div class="card"><h3>Tesla Powerwall <span class="tag" style="background:var(--tesla)">Soft anchor: brand, cells, capital</span></h3><div class="figrow small" data-figs="pw2"></div><div id="tl-tesla"></div></div>
+  <div class="card"><h3>Meta glasses <span class="tag" style="background:var(--meta)">Anchor: VR headsets and the metaverse, then Meta AI</span></h3><div class="figrow small" data-figs="quest,glasses"></div><div id="tl-meta"></div></div>
+</div>
+
+<div class="grid g4" style="margin-top:16px">
+  <div class="card verdict" style="--c:var(--watch)">
+    <h3>Apple Watch</h3><div class="v">Mismatch: pivoted</div>
+    <p>Launched as a notification and fashion device. The real job (activity, then health) emerged after launch. The iPhone anchor bought the time to find it.</p>
+  </div>
+  <div class="card verdict" style="--c:var(--pods)">
+    <h3>AirPods</h3><div class="v">Match: extended</div>
+    <p>One job from day one: wireless audio. The line scaled through tiers (base, Pro, Max) and a health layer on top.</p>
+  </div>
+  <div class="card verdict" style="--c:var(--tesla)">
+    <h3>Tesla Powerwall</h3><div class="v">Partial mismatch: value moved</div>
+    <p>"Independence" gave way to backup and grid services. The big revenue moved to a sibling product, Megapack.</p>
+  </div>
+  <div class="card verdict" style="--c:var(--meta)">
+    <h3>Meta glasses</h3><div class="v">Mismatch: became the successor</div>
+    <p>Sold as a metaverse add-on, scaled as an AI assistant. The anchor (VR) is shrinking while the glasses take its funding.</p>
+  </div>
+</div>
+
+<!-- 2. FEATURE GENERATIONS -->
+<h2>2. Feature growth by generation</h2>
+<p class="note">Each card is a generation; chips are the key additions, coloured by feature area. Radar charts count cumulative additions per area (tagged from the version tables) and overlay selected generations, so the shape shows where the product's weight moved. Feature-area tagging is an analyst judgment. Greyed chips are changes outside the tracked areas.</p>
+
+<div class="block card">
+  <h3 style="color:var(--watch);font-size:1.1rem">Apple Watch: from communication to clinical health</h3>
+  <div class="figrow" data-figs="watch2015,watchUltra3"></div>
+  <div id="rail-watch"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div><div id="radar-watch"></div><div id="rl-watch" class="legend"></div></div>
+    <ul class="read">
+      <li>Communication, the launch pitch, grows modestly (2 additions at launch, 5 today).</li>
+      <li>Clinical health sensing goes from none in 2015 to the largest area (9 additions): ECG, fall detection, blood oxygen, temperature, crash detection, sleep apnea, hypertension, sleep score, upgraded heart-rate sensing.</li>
+      <li>Standalone connectivity arrives in steps: cellular (2017), emergency calling (2019), 5G and satellite (2025).</li>
+      <li>The radar rotates from a communication-led watch to a health-led one. That is the pivot the iPhone anchor paid for, and every feature still runs through the iPhone relationship.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="block card">
+  <h3 style="color:var(--pods);font-size:1.1rem">AirPods: one job, widened</h3>
+  <div class="figrow" data-figs="pods1,podsCase"></div>
+  <div id="rail-pods"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div><div id="radar-pods"></div><div id="rl-pods" class="legend"></div></div>
+    <ul class="read">
+      <li>Launch was convenience (pairing, case) plus Siri. That area keeps growing (8 additions) but the shape stays recognisably the same.</li>
+      <li>Noise control and audio immersion become the largest area (9 additions) from the 2019 Pro onward.</li>
+      <li>Health and hearing (2) and intelligence (3) are layers added later, not a change of job.</li>
+      <li>This is the "match" case: the radar grows outward without rotating, inside the iPhone ecosystem.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="block card">
+  <h3 style="color:var(--tesla);font-size:1.1rem">Tesla Powerwall: capacity first, then power, solar and grid</h3>
+  <div class="figrow" data-figs="pw2,mega"></div>
+  <div id="rail-tesla"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div><div id="radar-tesla"></div><div id="rl-tesla" class="legend"></div></div>
+    <div>
+      <ul class="read">
+        <li>Capacity doubles in 2017 (6.4 to 13.5 kWh) and then stays flat.</li>
+        <li>Powerwall 3 raises continuous power from 5 to 11.5 kW, integrates the solar inverter and takes a grid role (virtual power plants from 2022).</li>
+        <li>None of these features depends on owning a Tesla car, which is why the feature set could grow toward the grid and utilities.</li>
+        <li>Capacity and power are normalized to Powerwall 3. Solar integration and grid participation are analyst-scored (0, 25, 50, 100%).</li>
+      </ul>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">
+        <div><div class="note">Usable capacity (kWh)</div><div id="c-pw-kwh"></div></div>
+        <div><div class="note">Power (kW)</div><div id="c-pw-kw"></div></div>
+      </div>
+      <p class="note" style="margin-top:4px">Powerwall 1 power is peak (about 3.3 kW); Powerwall 2 and 3 are continuous.</p>
+    </div>
+  </div>
+</div>
+
+<div class="block card">
+  <h3 style="color:var(--meta);font-size:1.1rem">Meta glasses: capture and audio first, then AI, then a display</h3>
+  <div class="figrow" data-figs="quest,glasses"></div>
+  <div id="rail-meta"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div><div id="radar-meta"></div><div id="rl-meta" class="legend"></div></div>
+    <ul class="read">
+      <li>The 2021 product was a camera and speaker pair tied to a Facebook account, pitched as a metaverse add-on.</li>
+      <li>Meta AI (2023) is the addition that changed the job, from social capture to hands-free assistant, and the anchor moved with it.</li>
+      <li>The built-in display (2025) is the first step toward a wearable computer. It is too early to read its impact.</li>
+      <li>The source file gives no feature detail for Gen 2 or Oakley Meta Vanguard, so they are shown without tagged additions.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 3. ANCHORING -->
+<h2>3. Anchoring: who is the customer tied to?</h2>
+<p class="note">Positions on the spectrum are analyst judgment based on the dependency evidence in the case study. HomeView is not in the source data; its position uses the premise that its personalised experience depends on paired Apple devices.</p>
+
+<div class="card">
+  <h3>The anchoring spectrum</h3>
+  <div id="spectrum"></div>
+  <div class="legend">
+    <span><i style="background:#374151"></i>Today</span>
+    <span><i style="background:#fff;border:2px dashed #374151"></i>Projected</span>
+    <span><i style="background:#9ca3af"></i>Earlier position</span>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h3>The dependency links</h3>
+  <table class="matrix">
+    <thead><tr><th></th><th>Apple Watch</th><th>AirPods</th><th>HomeView</th><th>Tesla Powerwall</th><th>Meta glasses</th></tr></thead>
+    <tbody>
+      <tr><td>Buyers come from the parent's customer base</td><td><i class="hb full"></i></td><td><i class="hb full"></i></td><td><i class="hb full"></i></td><td><i class="hb"></i></td><td><i class="hb"></i></td></tr>
+      <tr><td>Full experience needs the parent's device or account</td><td><i class="hb full"></i></td><td><i class="hb full"></i></td><td><i class="hb full"></i></td><td><i class="hb"></i></td><td><i class="hb full"></i></td></tr>
+      <tr><td>Parent funds or shares capital for the bet</td><td><i class="hb"></i></td><td><i class="hb"></i></td><td><i class="hb na"></i></td><td><i class="hb half"></i></td><td><i class="hb full"></i></td></tr>
+    </tbody>
+  </table>
+  <div class="legend"><span><i class="hb full" style="width:11px;height:11px;border-radius:50%"></i>Yes</span><span><i class="hb half" style="width:11px;height:11px;border-radius:50%"></i>Partly (shared brand, cells and capital)</span><span><i class="hb" style="width:11px;height:11px;border-radius:50%"></i>No / not needed</span><span><i class="hb na" style="width:11px;height:11px;border-radius:50%"></i>Not assessed</span></div>
+  <p><strong>Powerwall and Meta broke the demand link.</strong> Powerwall was never bought because someone owned a Tesla; Meta's buyers arrive through Ray-Ban and Oakley retail. Watch and AirPods keep every link to the iPhone, and HomeView, as described, would too.</p>
+  <p class="note">Meta keeps a technical link (Meta account and Meta AI app) and its parent funds Reality Labs losses, so it detached on demand, not on everything. It also has no phone OS, so it relies on an iOS or Android companion app it does not control. That is an analytical judgment, not a sourced finding.</p>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h3>How Meta's anchor moved</h3>
+  <div class="flow">
+    <div class="st"><strong>2021: anchored to the metaverse</strong><br>VR/metaverse platform, Facebook social graph, Facebook View app and account.</div>
+    <div class="ar">&rarr;</div>
+    <div class="st"><strong>2023 onward: anchored to Meta AI</strong><br>Hands-free assistant. EssilorLuxottica (Ray-Ban, Oakley) adds brand and retail.</div>
+    <div class="ar">&rarr;</div>
+    <div class="st"><strong>Dec 2025 onward: funded successor</strong><br>Spending shifts from the metaverse to AI glasses and wearables as VR is right-sized.</div>
+  </div>
+  <p class="note" style="margin-bottom:0">The anchor was not a successful core product but a struggling platform, so the glasses outgrew it instead of riding it.</p>
+</div>
+
+<div class="cols2" style="margin-top:16px">
+  <div class="lock">
+    <h3>Strong anchor: Watch, AirPods, HomeView</h3>
+    <ul>
+      <li>Buyers, distribution and trust come with the parent's installed base.</li>
+      <li>Time to find the job: the Watch needed three to four years to settle on health.</li>
+      <li>Reach stops where the parent ecosystem stops.</li>
+    </ul>
+  </div>
+  <div class="open">
+    <h3>Loose or migrating anchor: Powerwall, Meta glasses</h3>
+    <ul>
+      <li>Shared brand, cells and capital (Powerwall), or a funded platform (Meta), without requiring the parent's customers.</li>
+      <li>Slower early adoption for Powerwall: about five years to 100,000 installs.</li>
+      <li>Value moved to a bigger market: Megapack for Powerwall, AI glasses for Meta.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 4. COMPARISON -->
+<h2>4. Cross-case summary</h2>
+<div class="card">
+  <table>
+    <thead><tr><th></th><th><span data-thumb="watch2015"></span>Apple Watch</th><th><span data-thumb="pods1"></span>AirPods</th><th><span data-thumb="pw2"></span>Powerwall</th><th><span data-thumb="glasses"></span>Meta glasses</th></tr></thead>
+    <tbody>
+      <tr><td>Anchor</td><td>iPhone (hard)</td><td>iPhone (hard)</td><td>Tesla brand, cells, capital (soft)</td><td>VR/metaverse platform and Facebook graph, migrating to Meta AI</td></tr>
+      <tr><td>Launch job</td><td>Personal communication / fashion</td><td>Wireless audio</td><td>Home energy independence</td><td>Metaverse extension: capture and share</td></tr>
+      <tr><td>Eventual job</td><td>Health monitoring</td><td>Wireless audio plus health layer</td><td>Backup, VPP; scale in Megapack</td><td>AI assistant, moving to wearable computer</td></tr>
+      <tr><td>Core test</td><td>Mismatch (pivoted)</td><td>Match (extended)</td><td>Partial mismatch (value moved to sibling)</td><td>Mismatch (successor to the anchor)</td></tr>
+      <tr><td>Where the customer comes from</td><td>iPhone owners</td><td>iPhone owners</td><td>Any home, with or without a Tesla car</td><td>Ray-Ban and Oakley retail</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 5. HOMEVIEW -->
+<h2>5. HomeView: the same anchor, a bigger problem</h2>
+<p class="note">HomeView is not covered by the source data. This section applies the anchoring pattern to the premise in the post; it is a framing, not a measurement.</p>
+<div class="split">
+  <div class="card person" style="--c:var(--watch)">
+    <h3>A watch serves a person</h3>
+    <p>One wearer, one phone, one ecosystem. The iPhone anchor limits reach, but the person who buys it is the person who uses it.</p>
+    <span class="pill">Paired iPhone</span><span class="pill">Health data</span><span class="pill">Personal alerts</span>
+  </div>
+  <div class="card person" style="--c:var(--amber)">
+    <h3>A home display serves a household</h3>
+    <div class="figrow" data-figs="homeview"></div>
+    <p>Several people, possibly several ecosystems. The buyer's ecosystem may not be everyone's, so the anchor limits the people who use it, not just the people who buy it.</p>
+    <span class="pill">Apple user: full experience</span><span class="pill dim">Android user: limited</span><span class="pill dim">Guests, kids, partners</span>
+  </div>
+</div>
+<div class="card" style="margin-top:16px">
+  <p style="font-size:1.15rem;font-weight:700;margin-top:0">HomeView is set up to repeat the Watch and AirPods pattern.</p>
+  <p>It matches them on every link in section 3: Apple-owner buyers and an experience that needs paired Apple devices. The Watch and AirPods can live with that because one person owns both the phone and the product. A household product multiplies the problem, because each non-Apple member sees a limited version.</p>
+  <p style="margin-bottom:0">Powerwall and Meta show the way out: stop requiring the parent's customers. For HomeView, the test is whether it can serve the whole household, not just the Apple users within it.</p>
+</div>
+
+<footer>
+  Sources: the attached-bets case study (Apple 10-K FY2022 and FY2025; Six Colors FY2025 analysis; Tesla Q3 2026 update and Q1 2026 10-Q; Electrek and Energy-Storage.News; Powerwall version tables). Meta details come from search-result excerpts (TechRepublic, UploadVR, TechSpot, Meta's help center, AI Wiki), not full-page reads; verify against Meta and EssilorLuxottica filings before publication. Series 12, Ultra 4 and AirPods 5 details are from launch-week coverage. Feature-area tagging, radar scores and spectrum positions are analyst judgment.
+  <div id="credits"></div>
+</footer>
+</main>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const C = { watch: "#2563eb", pods: "#0d9488", tesla: "#dc2626", meta: "#7c3aed", home: "#374151" };
+const PAL = ["#2563eb", "#16a34a", "#9333ea", "#dc2626", "#d97706"];
+
+function el(tag, attrs, text) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (text !== undefined) n.textContent = text;
+  return n;
+}
+function h(tag, cls, html) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (html !== undefined) n.innerHTML = html;
+  return n;
+}
+function niceMax(v) {
+  const p = Math.pow(10, Math.floor(Math.log10(v)));
+  for (const m of [1, 1.5, 2, 2.5, 3, 4, 5, 8, 10]) if (m * p >= v) return m * p;
+  return v;
+}
+
+function barChart(id, items, o = {}) {
+  const W = 520, H = o.height || 250, L = 40, R = 10, T = 22, B = 42;
+  const max = niceMax(Math.max(...items.map(i => i.value)) * 1.05);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+  for (let t = 0; t <= 4; t++) {
+    const y = T + (H - T - B) * (1 - t / 4);
+    svg.appendChild(el("line", { x1: L, x2: W - R, y1: y, y2: y, class: "grid-line" }));
+    svg.appendChild(el("text", { x: L - 6, y: y + 4, "text-anchor": "end" }, +(max * t / 4).toFixed(1)));
+  }
+  const slot = (W - L - R) / items.length, bw = Math.min(46, slot * 0.64);
+  items.forEach((it, i) => {
+    const bh = (H - T - B) * it.value / max, x = L + slot * i + (slot - bw) / 2, y = H - B - bh;
+    svg.appendChild(el("rect", { x, y, width: bw, height: bh, rx: 3, fill: it.color || o.color || "#888" }));
+    svg.appendChild(el("text", { x: x + bw / 2, y: y - 5, "text-anchor": "middle", class: "val" }, (o.fmt || (v => v))(it.value)));
+    String(it.label).split("|").forEach((ln, k) => svg.appendChild(el("text", { x: x + bw / 2, y: H - B + 15 + k * 12, "text-anchor": "middle" }, ln)));
+  });
+  document.getElementById(id).appendChild(svg);
+}
+
+function timeline(id, spans, color, y0 = 2015, y1 = 2027) {
+  const W = 700, L = 20, R = 20, laneH = 34, T = 6, lanes = Math.max(...spans.map(s => s.lane)) + 1;
+  const H = T + lanes * laneH + 24, sx = y => L + (W - L - R) * (y - y0) / (y1 - y0);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+  for (let y = y0; y <= y1; y += 2) {
+    svg.appendChild(el("line", { x1: sx(y), x2: sx(y), y1: T, y2: H - 20, class: "grid-line" }));
+    svg.appendChild(el("text", { x: sx(y), y: H - 6, "text-anchor": "middle" }, y));
+  }
+  spans.forEach(s => {
+    const x = sx(s.start), w = sx(s.end) - x - 2, y = T + s.lane * laneH + 3;
+    svg.appendChild(el("rect", { x, y, width: w, height: laneH - 8, rx: 5, fill: color, opacity: s.lane ? 0.55 : 0.9 }));
+    svg.appendChild(el("text", { x: x + 6, y: y + (laneH - 8) / 2 + 4, style: "fill:#fff;font-weight:600" }, s.label));
+  });
+  document.getElementById(id).appendChild(svg);
+}
+
+/* Generation rail: gens = [{y, n, add: [[featureKey|null, text], ...]}] */
+function rail(id, feats, gens, color) {
+  const root = document.getElementById(id);
+  const keys = h("div", "keys");
+  feats.forEach((f, i) => { const s = h("span", "", f.l.replace("|", " ")); s.style.background = PAL[i]; keys.appendChild(s); });
+  root.appendChild(keys);
+  const wrap = h("div", "rail-wrap"), r = h("div", "rail");
+  r.style.setProperty("--rc", color);
+  gens.forEach(g => {
+    const c = h("div", "gen");
+    c.appendChild(h("div", "yr", g.y));
+    c.appendChild(h("div", "nm", g.n));
+    g.add.forEach(([f, t]) => {
+      const idx = feats.findIndex(x => x.k === f);
+      const chip = h("span", idx < 0 ? "chip none" : "chip", t);
+      if (idx >= 0) chip.style.background = PAL[idx];
+      c.appendChild(chip);
+    });
+    r.appendChild(c);
+  });
+  wrap.appendChild(r);
+  root.appendChild(wrap);
+}
+
+/* Cumulative additions per feature area up to and including gens[upTo] */
+function cumulative(feats, gens, upTo) {
+  return feats.map(f => gens.slice(0, upTo + 1).reduce((n, g) => n + g.add.filter(a => a[0] === f.k).length, 0));
+}
+
+/* Radar: snaps = [{label, vals: 0..1 per feature}] */
+function radar(id, legendId, feats, snaps, color) {
+  const W = 480, H = 380, cx = W / 2, cy = 192, R = 120, n = feats.length;
+  const ang = i => (-90 + 360 * i / n) * Math.PI / 180;
+  const pt = (i, v) => [cx + R * v * Math.cos(ang(i)), cy + R * v * Math.sin(ang(i))];
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+  [0.25, 0.5, 0.75, 1].forEach(r => svg.appendChild(el("polygon", {
+    points: feats.map((_, i) => pt(i, r).join(",")).join(" "), fill: "none", stroke: "#e5e5ea" })));
+  feats.forEach((f, i) => {
+    const [x, y] = pt(i, 1);
+    svg.appendChild(el("line", { x1: cx, y1: cy, x2: x, y2: y, stroke: "#e5e5ea" }));
+    const lx = cx + (R + 14) * Math.cos(ang(i)), ly = cy + (R + 14) * Math.sin(ang(i)), c = Math.cos(ang(i));
+    const anchor = c > 0.3 ? "start" : c < -0.3 ? "end" : "middle";
+    f.l.split("|").forEach((ln, k, arr) => svg.appendChild(el("text", {
+      x: lx, y: ly + 4 + (k - (Math.sin(ang(i)) < -0.5 ? arr.length - 1 : 0)) * 13, "text-anchor": anchor, class: "axis-label" }, ln)));
+  });
+  const ramp = [0.3, 0.5, 0.75, 1];
+  snaps.forEach((s, k) => {
+    const op = ramp[ramp.length - snaps.length + k];
+    svg.appendChild(el("polygon", {
+      points: s.vals.map((v, i) => pt(i, v).join(",")).join(" "), fill: color, "fill-opacity": 0.08 + 0.05 * k,
+      stroke: color, "stroke-opacity": op, "stroke-width": k === snaps.length - 1 ? 3 : 2, "stroke-dasharray": k === 0 ? "5 4" : "0" }));
+    s.vals.forEach((v, i) => { const [x, y] = pt(i, v); svg.appendChild(el("circle", { cx: x, cy: y, r: 3, fill: color, opacity: op })); });
+  });
+  document.getElementById(id).appendChild(svg);
+  const lg = document.getElementById(legendId);
+  snaps.forEach((s, k) => {
+    const op = ramp[ramp.length - snaps.length + k];
+    lg.appendChild(h("span", "", `<i style="background:${color};opacity:${op}"></i>${s.label}`));
+  });
+}
+
+/* Anchoring spectrum: x 0 = locked to the parent's customers, 1 = open to anyone */
+function spectrum(id, rows) {
+  const W = 760, L = 210, R = 30, T = 40, rowH = 46, H = T + rows.length * rowH + 14;
+  const sx = v => L + (W - L - R) * v;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+  svg.appendChild(el("defs", {})).innerHTML =
+    '<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6e6e73"/></marker>';
+  svg.appendChild(el("text", { x: sx(0), y: 16, "text-anchor": "start", class: "axis-label" }, "Locked to the parent's customers"));
+  svg.appendChild(el("text", { x: sx(1), y: 16, "text-anchor": "end", class: "axis-label" }, "Open to anyone"));
+  svg.appendChild(el("rect", { x: sx(0), y: 24, width: sx(1) - sx(0), height: 6, rx: 3, fill: "url(#grad)" }));
+  svg.querySelector("defs").innerHTML +=
+    '<linearGradient id="grad" x1="0" x2="1"><stop offset="0" stop-color="#374151"/><stop offset="1" stop-color="#e5e7eb"/></linearGradient>';
+  rows.forEach((r, i) => {
+    const y = T + i * rowH + rowH / 2;
+    svg.appendChild(el("line", { x1: sx(0), x2: sx(1), y1: y, y2: y, class: "grid-line" }));
+    svg.appendChild(el("text", { x: 56, y: y + 4, class: "axis-label" }, r.name));
+    if (r.img) {
+      svg.appendChild(el("rect", { x: 6, y: y - 19, width: 40, height: 38, rx: 6, fill: "#f8fafc", stroke: "#cbd5e1", "stroke-dasharray": "3 2" }));
+      const im = el("image", { x: 6, y: y - 19, width: 40, height: 38, preserveAspectRatio: "xMidYMid slice", href: IMG[r.img].src });
+      im.setAttribute("clip-path", "inset(0 round 6px)");
+      svg.appendChild(im);
+      const probe = new Image();
+      probe.onerror = () => im.remove();
+      probe.src = IMG[r.img].src;
+    }
+    if (r.from !== undefined) {
+      svg.appendChild(el("line", { x1: sx(r.from) + 9, x2: sx(r.to) - 12, y1: y, y2: y, stroke: "#6e6e73", "stroke-width": 2, "marker-end": "url(#arr)" }));
+      svg.appendChild(el("circle", { cx: sx(r.from), cy: y, r: 8, fill: "#9ca3af" }));
+      if (r.fromLabel) svg.appendChild(el("text", { x: sx(r.from), y: y - 14, "text-anchor": "middle" }, r.fromLabel));
+    }
+    svg.appendChild(el("circle", { cx: sx(r.to), cy: y, r: 9, fill: r.projected ? "#fff" : r.color, stroke: r.color, "stroke-width": 3, "stroke-dasharray": r.projected ? "3 2" : "0" }));
+    if (r.toLabel) svg.appendChild(el("text", { x: sx(r.to), y: y - 14, "text-anchor": "middle" }, r.toLabel));
+  });
+  document.getElementById(id).appendChild(svg);
+}
+
+/* Positioning timelines */
+timeline("tl-watch", [
+  { start: 2015, end: 2016, lane: 0, label: "Fashion" },
+  { start: 2016, end: 2018, lane: 0, label: "Fitness" },
+  { start: 2018, end: 2027, lane: 0, label: "Health device (ECG, SpO2, sleep, BP)" },
+  { start: 2017, end: 2020, lane: 1, label: "Independent (LTE)" },
+  { start: 2020, end: 2027, lane: 1, label: "Tiers: SE and Ultra" },
+], C.watch);
+timeline("tl-pods", [
+  { start: 2016, end: 2019, lane: 0, label: "Cord-free" },
+  { start: 2019, end: 2022, lane: 0, label: "Premium audio" },
+  { start: 2024, end: 2027, lane: 0, label: "Health" },
+  { start: 2021, end: 2027, lane: 1, label: "Tiers: base, Pro, Max" },
+], C.pods);
+timeline("tl-tesla", [
+  { start: 2015, end: 2016, lane: 0, label: "Indep." },
+  { start: 2016, end: 2020, lane: 0, label: "Solar plus storage" },
+  { start: 2020, end: 2027, lane: 0, label: "Resilience and backup" },
+  { start: 2022, end: 2027, lane: 1, label: "Grid asset (VPP)" },
+  { start: 2022, end: 2027, lane: 2, label: "Megapack: utility-scale" },
+], C.tesla);
+timeline("tl-meta", [
+  { start: 2021.7, end: 2023.8, lane: 0, label: "Metaverse ext." },
+  { start: 2023.8, end: 2025.7, lane: 0, label: "AI assistant" },
+  { start: 2025.7, end: 2027, lane: 0, label: "Display" },
+  { start: 2014, end: 2025.9, lane: 1, label: "VR headsets: the lead bet (Oculus 2014, Quest 2019)" },
+  { start: 2025.9, end: 2027, lane: 1, label: "Cuts" },
+], C.meta, 2014, 2027);
+
+/* Feature generations */
+const WATCH_F = [
+  { k: "comm", l: "Communication" }, { k: "fit", l: "Fitness and GPS" }, { k: "alone", l: "Standalone|connectivity" },
+  { k: "health", l: "Clinical health|sensing" }, { k: "rugged", l: "Rugged and|outdoor" }];
+const WATCH_G = [
+  { y: "2015", n: "Original (Series 0)", add: [["comm", "Notifications and Taptic alerts"], ["comm", "Apple Pay"], ["fit", "Heart-rate sensor"]] },
+  { y: "2016", n: "Series 1 / 2", add: [["fit", "GPS"], ["rugged", "50 m water resistance"], [null, "Faster chip, brighter display"]] },
+  { y: "2017", n: "Series 3", add: [["alone", "Cellular option"], ["fit", "Altimeter"], ["comm", "Faster Siri"]] },
+  { y: "2018", n: "Series 4", add: [["health", "ECG (FDA-cleared)"], ["health", "Fall detection"], [null, "~30% larger display"]] },
+  { y: "2019", n: "Series 5", add: [["fit", "Compass"], ["alone", "International emergency calling"], [null, "Always-on display"]] },
+  { y: "2020", n: "Series 6 + SE", add: [["health", "Blood oxygen"], ["fit", "Always-on altimeter"], [null, "SE tier introduced"]] },
+  { y: "2021", n: "Series 7", add: [["rugged", "Tougher front crystal"], [null, "Larger display, faster charging"]] },
+  { y: "2022", n: "Series 8, SE 2, Ultra", add: [["health", "Temperature sensing"], ["health", "Crash detection"], ["rugged", "Ultra: titanium, Action button, dive"], ["fit", "Dual-frequency GPS"]] },
+  { y: "2023", n: "Series 9", add: [["comm", "Double-tap gesture"], ["comm", "On-device Siri"], [null, "New chip"]] },
+  { y: "2024", n: "Series 10", add: [["health", "Sleep apnea notifications"], [null, "Thinner case, larger display"]] },
+  { y: "2025", n: "Series 11, Ultra 3, SE 3", add: [["health", "Hypertension notifications"], ["health", "Sleep score"], ["alone", "5G"], ["alone", "Ultra 3: satellite"]] },
+  { y: "Sep 2026", n: "Series 12, Ultra 4", add: [["health", "Upgraded heart-rate sensing"], ["rugged", "Ceramic Shield 2 glass"], [null, "Dark bronze finish, AI-assisted listening"]] },
+];
+rail("rail-watch", WATCH_F, WATCH_G, C.watch);
+const wMax = Math.max(...cumulative(WATCH_F, WATCH_G, 11));
+radar("radar-watch", "rl-watch", WATCH_F, [[0, "2015"], [3, "2018"], [7, "2022"], [11, "2026"]].map(([i, l]) => ({ label: l, vals: cumulative(WATCH_F, WATCH_G, i).map(v => v / wMax) })), C.watch);
+
+const PODS_F = [
+  { k: "conv", l: "Wireless|convenience" }, { k: "audio", l: "Noise control and|immersion" },
+  { k: "health", l: "Health and|hearing" }, { k: "intel", l: "Intelligence" }];
+const PODS_G = [
+  { y: "2016", n: "AirPods (1st gen)", add: [["conv", "W1 chip, one-step pairing"], ["conv", "Charging case"], ["intel", "Siri via double tap"]] },
+  { y: "2019", n: "AirPods (2nd gen)", add: [["conv", "H1 chip, longer talk time"], ["intel", "Hands-free \"Hey Siri\""]] },
+  { y: "Oct 2019", n: "AirPods Pro", add: [["audio", "Active noise cancellation"], ["audio", "Transparency mode"], ["conv", "Force sensor controls"]] },
+  { y: "2020", n: "AirPods Max", add: [["audio", "Spatial audio"], [null, "Over-ear premium tier"]] },
+  { y: "2021", n: "AirPods (3rd gen)", add: [["audio", "Spatial audio"], ["conv", "Water and sweat resistance"], ["conv", "MagSafe"]] },
+  { y: "2022", n: "AirPods Pro (2nd gen)", add: [["audio", "~2x noise cancellation"], ["audio", "Adaptive transparency"], ["conv", "Touch controls"]] },
+  { y: "2024", n: "AirPods 4", add: [["conv", "Open-fit redesign"], ["audio", "ANC tier on the base line"], ["health", "Hearing health (Pro 2)"]] },
+  { y: "2025", n: "AirPods Pro 3", add: [["health", "Heart-rate sensing"], ["audio", "Further ANC gain"], ["intel", "Live translation"]] },
+  { y: "Sep 2026", n: "AirPods 5", add: [["audio", "Noise cancellation reaches the entry tier"]] },
+];
+rail("rail-pods", PODS_F, PODS_G, C.pods);
+const pMax = Math.max(...cumulative(PODS_F, PODS_G, 8));
+radar("radar-pods", "rl-pods", PODS_F, [[0, "2016"], [2, "2019"], [5, "2022"], [8, "2026"]].map(([i, l]) => ({ label: l, vals: cumulative(PODS_F, PODS_G, i).map(v => v / pMax) })), C.pods);
+
+const TESLA_F = [
+  { k: "cap", l: "Storage|capacity" }, { k: "pow", l: "Power output" }, { k: "sol", l: "Solar|integration" }, { k: "grid", l: "Grid|participation" }];
+const TESLA_G = [
+  { y: "2015", n: "Powerwall 1", add: [["cap", "~6.4 kWh usable"], ["pow", "~3.3 kW peak"], ["sol", "DC-coupled"], [null, "~500 pilot units"]] },
+  { y: "2017", n: "Powerwall 2 (announced 2016)", add: [["cap", "13.5 kWh"], ["pow", "5 kW continuous"], ["sol", "Integrated inverter"], [null, "Mass production begins"]] },
+  { y: "2021", n: "Powerwall+", add: [["sol", "Integrated solar inverter, higher solar input"], [null, "200,000 installs by May 2021"]] },
+  { y: "2023", n: "Powerwall 3", add: [["pow", "11.5 kW continuous"], ["sol", "Integrated solar inverter"], ["grid", "VPP and utility programs (from 2022)"], [null, "LFP chemistry, 13.5 kWh"]] },
+];
+rail("rail-tesla", TESLA_F, TESLA_G, C.tesla);
+radar("radar-tesla", "rl-tesla", TESLA_F, [
+  { label: "Powerwall 1 (2015)", vals: [6.4 / 13.5, 3.3 / 11.5, 0.25, 0] },
+  { label: "Powerwall 2 (2017)", vals: [1, 5 / 11.5, 0.5, 0] },
+  { label: "Powerwall 3 (2023)", vals: [1, 1, 1, 1] },
+], C.tesla);
+barChart("c-pw-kwh", [
+  { label: "PW1|2015", value: 6.4 }, { label: "PW2|2017", value: 13.5 }, { label: "PW3|2023", value: 13.5 },
+], { color: C.tesla, height: 210 });
+barChart("c-pw-kw", [
+  { label: "PW1|2015", value: 3.3 }, { label: "PW2|2017", value: 5 }, { label: "PW3|2023", value: 11.5 },
+], { color: C.tesla, height: 210 });
+
+const META_F = [
+  { k: "cap", l: "Capture|(photo, video)" }, { k: "audio", l: "Audio and calls" }, { k: "ai", l: "AI assistant" }, { k: "disp", l: "Built-in display" }];
+const META_G = [
+  { y: "Sep 2021", n: "Ray-Ban Stories", add: [["cap", "Camera"], ["audio", "Camera and speaker pair"], [null, "Facebook View app and account"]] },
+  { y: "Oct 2023", n: "Ray-Ban Meta relaunch", add: [["ai", "Meta AI, hands-free"], ["audio", "Calls and music"], [null, "Stories name dropped"]] },
+  { y: "Apr 2025", n: "Companion app", add: [["ai", "Becomes the Meta AI app"]] },
+  { y: "Sep 2025", n: "Gen 2, Oakley Meta Vanguard", add: [[null, "Line widens upmarket"]] },
+  { y: "Sep 2025", n: "Meta Ray-Ban Display", add: [["disp", "Built-in display"]] },
+];
+rail("rail-meta", META_F, META_G, C.meta);
+const mMax = Math.max(...cumulative(META_F, META_G, 4));
+radar("radar-meta", "rl-meta", META_F, [[0, "2021"], [1, "2023"], [4, "2025"]].map(([i, l]) => ({ label: l, vals: cumulative(META_F, META_G, i).map(v => v / mMax) })), C.meta);
+
+/* Images: local copies of Wikimedia Commons files (credits shown in captions and footer).
+   glasses and homeview are supplied by the author: drop the files into images/. */
+const CM = "https://commons.wikimedia.org/wiki/File:";
+const IMG = {
+  watch2015: { src: "images/watch-2015.jpg", alt: "Apple Watch Sport on display, 2015", cap: "Original Apple Watch Sport, 2015", by: "thomersch", lic: "CC BY 4.0", url: CM + "Apple_Watch_Sport.jpg" },
+  watchUltra3: { src: "images/watch-ultra3.jpg", alt: "Apple Watch Ultra on a titanium case", cap: "Apple Watch Ultra (file titled Ultra 3, 2026)", by: "Gpkp", lic: "CC BY-SA 4.0", url: CM + "Apple_Watch_Ultra_3_Ti_Ocean_Band_(2026)_02.jpg" },
+  pods1: { src: "images/airpods-pro-1.jpg", alt: "AirPods Pro with case", cap: "AirPods Pro", by: "aconcagua", lic: "CC BY-SA 4.0", url: CM + "AirPods_Pro_1.jpg" },
+  podsCase: { src: "images/airpods-pro-case.jpg", alt: "AirPods Pro charging case", cap: "AirPods Pro charging case", by: "aconcagua", lic: "CC BY-SA 4.0", url: CM + "AirPods_Pro_case.jpg" },
+  pw2: { src: "images/powerwall-2.jpg", alt: "Tesla Powerwall 2 on display", cap: "Tesla Powerwall 2", by: "Raysonho", lic: "CC0", url: CM + "TeslaPowerwall2.jpg" },
+  mega: { src: "images/megapack.webp", alt: "Concept rendering of a Megapack site with solar canopies", cap: "Concept rendering of a Megapack site with solar canopies (the utility-scale sibling)", by: "Wikideas1", lic: "CC0", url: CM + "Tesla_Megapack_site_with_solar_canopies.webp" },
+  quest: { src: "images/quest-2.jpg", alt: "Oculus Quest 2 headset on a store display", cap: "Oculus Quest 2, branded \"Oculus from Facebook\": the VR anchor", by: "KKPCW", lic: "CC BY-SA 4.0", url: CM + "Oculus_Quest_2_-_1.jpg" },
+  glasses: { src: "images/meta-glasses.jpg", alt: "Meta glasses", cap: "Meta glasses: the satellite" },
+  homeview: { src: "images/homeview.jpg", alt: "HomeView", cap: "HomeView" },
+};
+const credit = k => IMG[k].by ? `<span class="credit">Photo: <a href="${IMG[k].url}">${IMG[k].by}</a>, ${IMG[k].lic}, via Wikimedia Commons</span>` : "";
+document.querySelectorAll("[data-figs]").forEach(c => {
+  c.innerHTML = c.dataset.figs.split(",").map(k => `<figure class="fig"><img src="${IMG[k].src}" alt="${IMG[k].alt}" onerror="slotMissing(this)"><figcaption>${IMG[k].cap}${credit(k)}</figcaption></figure>`).join("");
+});
+document.querySelectorAll("[data-thumb]").forEach(c => {
+  const k = c.dataset.thumb;
+  c.innerHTML = `<img class="thumb" src="${IMG[k].src}" alt="${IMG[k].alt}" onerror="slotMissing(this)">`;
+});
+document.getElementById("credits").innerHTML = "<strong>Image credits:</strong> " + Object.keys(IMG).filter(k => IMG[k].by)
+  .map(k => `<a href="${IMG[k].url}">${IMG[k].cap.split(" (")[0]}</a> by ${IMG[k].by} (${IMG[k].lic})`).join("; ") +
+  ". All via Wikimedia Commons. CC BY-SA images are shared under the same licence. Meta glasses and HomeView images are supplied by the author.";
+
+/* Anchoring spectrum: positions are analyst judgment */
+spectrum("spectrum", [
+  { name: "Apple Watch", img: "watch2015", to: 0.05, color: C.watch, toLabel: "iPhone" },
+  { name: "AirPods", img: "pods1", to: 0.08, color: C.pods, toLabel: "iPhone" },
+  { name: "HomeView", img: "homeview", to: 0.08, color: C.home, projected: true, toLabel: "Paired Apple devices" },
+  { name: "Meta glasses", img: "glasses", from: 0.14, to: 0.58, color: C.meta, fromLabel: "2021: metaverse, Facebook", toLabel: "Today: retail buyers, Meta AI" },
+  { name: "Tesla Powerwall", img: "pw2", from: 0.72, to: 0.95, color: C.tesla, fromLabel: "No Tesla car needed", toLabel: "Megapack: utilities" },
+]);
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{
+    "batchcomplete": true,
+    "query": {
+        "normalized": [
+            {
+                "fromencoded": false,
+                "from": "File:Apple_Watch_Sport.jpg",
+                "to": "File:Apple Watch Sport.jpg"
+            }
+        ],
+        "pages": [
+            {
+                "pageid": 39504610,
+                "ns": 6,
+                "title": "File:Apple Watch Sport.jpg",
+                "imagerepository": "local",
+                "imageinfo": [
+                    {
+                        "size": 1459100,
+                        "width": 3264,
+                        "height": 2448,
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Apple_Watch_Sport.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+                        "descriptionurl": "https://commons.wikimedia.org/wiki/File:Apple_Watch_Sport.jpg",
+                        "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=39504610",
+                        "extmetadata": {
+                            "DateTime": {
+                                "value": "2015-04-10 18:11:43",
+                                "source": "mediawiki-metadata",
+                                "hidden": ""
+                            },
+                            "ObjectName": {
+                                "value": "Apple Watch Sport",
+                                "source": "mediawiki-metadata"
+                            },
+                            "CommonsMetadataExtension": {
+                                "value": 1.2,
+                                "source": "extension",
+                                "hidden": ""
+                            },
+                            "Categories": {
+                                "value": "Germany photographs taken on 2015-04-10|Apple Stores in Germany|Self-published work|Uploaded with Commons Reloaded|Files with coordinates missing SDC location of creation|Apple Watch Series 0",
+                                "source": "commons-categories",
+                                "hidden": ""
+                            },
+                            "Assessments": {
+                                "value": "",
+                                "source": "commons-categories",
+                                "hidden": ""
+                            },
+                            "GPSLatitude": {
+                                "value": "51.050239",
+                                "source": "commons-desc-page"
+                            },
+                            "GPSLongitude": {
+                                "value": "13.735633",
+                                "source": "commons-desc-page"
+                            },
+                            "GPSMapDatum": {
+                                "value": "WGS-84",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "ImageDescription": {
+                                "value": "The 2015 introductional model of the Apple Watch Sport on display in the Apple Store in Dresden, Germany",
+                                "source": "commons-desc-page"
+                            },
+                            "DateTimeOriginal": {
+                                "value": "10 April 2015\u00a0(according to <span lang=\"en\" dir=\"ltr\"><a href=\"https://en.wikipedia.org/wiki/Exif\" class=\"extiw\" title=\"en:Exif\">Exif</a></span> data)",
+                                "source": "commons-desc-page"
+                            },
+                            "Credit": {
+                                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                                "source": "commons-desc-page"
+                            },
+                            "Artist": {
+                                "value": "<a href=\"//commons.wikimedia.org/wiki/User:Thomersch\" title=\"User:Thomersch\">thomersch</a>",
+                                "source": "commons-desc-page"
+                            },
+                            "LicenseShortName": {
+                                "value": "CC BY 4.0",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "UsageTerms": {
+                                "value": "Creative Commons Attribution 4.0",
+                                "source": "commons-desc-page"
+                            },
+                            "AttributionRequired": {
+                                "value": "true",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "LicenseUrl": {
+                                "value": "https://creativecommons.org/licenses/by/4.0",
+                                "source": "commons-desc-page"
+                            },
+                            "Copyrighted": {
+                                "value": "True",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "Restrictions": {
+                                "value": "",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "License": {
+                                "value": "cc-by-4.0",
+                                "source": "commons-templates",
+                                "hidden": ""
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

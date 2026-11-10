@@ -1,0 +1,105 @@
+{
+    "batchcomplete": true,
+    "query": {
+        "normalized": [
+            {
+                "fromencoded": false,
+                "from": "File:Oculus_Quest_2_-_1.jpg",
+                "to": "File:Oculus Quest 2 - 1.jpg"
+            }
+        ],
+        "pages": [
+            {
+                "pageid": 95187594,
+                "ns": 6,
+                "title": "File:Oculus Quest 2 - 1.jpg",
+                "imagerepository": "local",
+                "imageinfo": [
+                    {
+                        "size": 5587342,
+                        "width": 2160,
+                        "height": 3840,
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Oculus_Quest_2_-_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+                        "descriptionurl": "https://commons.wikimedia.org/wiki/File:Oculus_Quest_2_-_1.jpg",
+                        "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=95187594",
+                        "extmetadata": {
+                            "DateTime": {
+                                "value": "2020-10-18 13:34:02",
+                                "source": "mediawiki-metadata",
+                                "hidden": ""
+                            },
+                            "ObjectName": {
+                                "value": "Oculus Quest 2 - 1",
+                                "source": "mediawiki-metadata"
+                            },
+                            "CommonsMetadataExtension": {
+                                "value": 1.2,
+                                "source": "extension",
+                                "hidden": ""
+                            },
+                            "Categories": {
+                                "value": "Oculus Touch|Oculus Quest 2|Self-published work|Virtual reality in Japan|Nagoya photographs taken on 2020-10-18",
+                                "source": "commons-categories",
+                                "hidden": ""
+                            },
+                            "Assessments": {
+                                "value": "",
+                                "source": "commons-categories",
+                                "hidden": ""
+                            },
+                            "ImageDescription": {
+                                "value": "\u5e97\u982d\u5c55\u793a\u4e2d\u306e\u300cOculus Quest 2\u300d\u306e\u30b5\u30f3\u30d7\u30eb\u3002\u540d\u53e4\u5c4b\u5e02\u306e\u5bb6\u96fb\u91cf\u8ca9\u5e97\u3067\u64ae\u5f71\u3002",
+                                "source": "commons-desc-page"
+                            },
+                            "DateTimeOriginal": {
+                                "value": "2020-10-18 17:54:50",
+                                "source": "commons-desc-page"
+                            },
+                            "Credit": {
+                                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                                "source": "commons-desc-page"
+                            },
+                            "Artist": {
+                                "value": "<a href=\"//commons.wikimedia.org/wiki/User:KKPCW\" title=\"User:KKPCW\">KKPCW</a>",
+                                "source": "commons-desc-page"
+                            },
+                            "LicenseShortName": {
+                                "value": "CC BY-SA 4.0",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "UsageTerms": {
+                                "value": "Creative Commons Attribution-Share Alike 4.0",
+                                "source": "commons-desc-page"
+                            },
+                            "AttributionRequired": {
+                                "value": "true",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "LicenseUrl": {
+                                "value": "https://creativecommons.org/licenses/by-sa/4.0",
+                                "source": "commons-desc-page"
+                            },
+                            "Copyrighted": {
+                                "value": "True",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "Restrictions": {
+                                "value": "",
+                                "source": "commons-desc-page",
+                                "hidden": ""
+                            },
+                            "License": {
+                                "value": "cc-by-sa-4.0",
+                                "source": "commons-templates",
+                                "hidden": ""
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
